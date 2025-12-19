@@ -63,11 +63,6 @@ personal-finance-manager/
 ├── login.js            # Login Logic
 └── signup.js           # Signup Logic
 ```
-
-## 📸 Screenshots
-
-*(Add screenshots of your Dashboard and Landing Page here)*
-
 ## 🤝 Contributing
 
 Contributions are welcome! Here's how you can help:
@@ -82,8 +77,4 @@ Contributions are welcome! Here's how you can help:
 
 Distributed under the MIT License. See `LICENSE` for more information.
 
----
 
-<p align="center">
-  Made with ❤️ by Anurag
-</p>
