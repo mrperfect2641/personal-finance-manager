@@ -1,8 +1,5 @@
-const SUPABASE_URL = "https://teafrrntffzraoiuurie.supabase.co";
-const SUPABASE_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRlYWZycm50ZmZ6cmFvaXV1cmllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM1OTMwMzgsImV4cCI6MjA2OTE2OTAzOH0.EZ7Lkxo_H1lZMMMH9OmjqKm3ALcIRripTzYrz7FosZs";
-
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
+// Supabase is initialized in config.js
+// const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 // DOM Elements
 const sidebar = document.getElementById("sidebar");
@@ -18,7 +15,7 @@ const logoutDropdown = document.getElementById("logoutDropdown");
 // Listen for auth changes (optional but useful)
 
 // Listen for auth changes (optional but useful)
-supabase.auth.onAuthStateChange((event, session) => {
+supabaseClient.auth.onAuthStateChange((event, session) => {
   if (!session) {
     window.location.href = "login.html";
   }
@@ -41,17 +38,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Check authentication status
 async function checkAuth() {
+  console.log("Checking authentication status...");
   const {
     data: { session },
     error,
-  } = await supabase.auth.getSession();
+  } = await supabaseClient.auth.getSession();
   if (error || !session) {
     return (window.location.href = "login.html");
   }
   currentUser = session.user;
 
   // Fetch username from profiles table
-  const { data: profile, error: profileErr } = await supabase
+  const { data: profile, error: profileErr } = await supabaseClient
     .from("profiles")
     .select("username")
     .eq("id", currentUser.id)
@@ -96,23 +94,35 @@ function setupEventListeners() {
   });
 
   // Settings button from dropdown
-  document.getElementById("settingsDropdown").addEventListener("click", () => {
-    showSection('settings');
-  });
+  const settingsDropdown = document.getElementById("settingsDropdown");
+  if (settingsDropdown) {
+    settingsDropdown.addEventListener("click", (e) => {
+      e.preventDefault();
+      showSection('settings');
+    });
+  }
 
   // Logout buttons → show modal instead of logging out immediately
-  document.getElementById("logoutButton").addEventListener("click", () => {
-    const logoutModal = new bootstrap.Modal(document.getElementById("logoutModal"));
-    logoutModal.show();
-  });
-  document.getElementById("logoutDropdown").addEventListener("click", () => {
-    const logoutModal = new bootstrap.Modal(document.getElementById("logoutModal"));
-    logoutModal.show();
-  });
+  const logoutBtn = document.getElementById("logoutButton");
+  if (logoutBtn) {
+    logoutBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      showLogoutModal();
+    });
+  }
+
+  const logoutDrop = document.getElementById("logoutDropdown");
+  if (logoutDrop) {
+    logoutDrop.addEventListener("click", (e) => {
+      e.preventDefault();
+      showLogoutModal();
+    });
+  }
 
   // Confirm logout
   document.getElementById("confirmLogoutBtn").addEventListener("click", async () => {
-    const { error } = await supabase.auth.signOut();
+    console.log("Attempting to logout...");
+    const { error } = await supabaseClient.auth.signOut();
     if (error) {
       return showNotification("Logout failed: " + error.message, "error");
     }
@@ -133,7 +143,7 @@ async function addTransaction() {
     return;
   }
 
-  const { data, error } = await supabase.from("transactions").insert([
+  const { data, error } = await supabaseClient.from("transactions").insert([
     {
       user_id: currentUser.id,
       amount,
@@ -157,7 +167,8 @@ async function addTransaction() {
 
 // Load transactions
 async function loadTransactions() {
-  let query = supabase
+  console.log("Fetching transactions for user:", currentUser.id);
+  let query = supabaseClient
     .from("transactions")
     .select("*")
     .eq("user_id", currentUser.id)
@@ -200,37 +211,31 @@ function updateTransactionsTable(transactions) {
 
   transactions.forEach((transaction) => {
     const date = new Date(transaction.date);
-    const formattedDate = `${date.getDate()}/${
-      date.getMonth() + 1
-    }/${date.getFullYear()}`;
+    const formattedDate = `${date.getDate()}/${date.getMonth() + 1
+      }/${date.getFullYear()}`;
 
     const row = document.createElement("tr");
     row.innerHTML = `
                     <td>${formattedDate}</td>
                     <td>${transaction.description}</td>
                     <td>${transaction.category}</td>
-                    <td>${
-                      transaction.type.charAt(0).toUpperCase() +
-                      transaction.type.slice(1)
-                    }</td>
-                    <td class="${
-                      transaction.type === "income"
-                        ? "text-success"
-                        : "text-danger"
-                    }">
-                        ${
-                          transaction.type === "income" ? "+" : "-"
-                        }₹${transaction.amount.toFixed(2)}
+                    <td>${transaction.type.charAt(0).toUpperCase() +
+      transaction.type.slice(1)
+      }</td>
+                    <td class="${transaction.type === "income"
+        ? "text-success"
+        : "text-danger"
+      }">
+                        ${transaction.type === "income" ? "+" : "-"
+      }₹${transaction.amount.toFixed(2)}
                     </td>
                     <td>
-                        <button class="btn btn-sm btn-outline-primary me-2 edit-btn" data-id="${
-                          transaction.id
-                        }">
+                        <button class="btn btn-sm btn-outline-primary me-2 edit-btn" data-id="${transaction.id
+      }">
                             <i class="fas fa-edit"></i>
                         </button>
-                        <button class="btn btn-sm btn-outline-danger delete-btn" data-id="${
-                          transaction.id
-                        }">
+                        <button class="btn btn-sm btn-outline-danger delete-btn" data-id="${transaction.id
+      }">
                             <i class="fas fa-trash"></i>
                         </button>
                     </td>
@@ -250,7 +255,7 @@ function updateTransactionsTable(transactions) {
 
 // Open edit modal
 async function openEditModal(id) {
-  const { data: transaction, error } = await supabase
+  const { data: transaction, error } = await supabaseClient
     .from("transactions")
     .select("*")
     .eq("id", id)
@@ -287,7 +292,7 @@ async function updateTransaction() {
     return;
   }
 
-  const { error } = await supabase
+  const { error } = await supabaseClient
     .from("transactions")
     .update({ amount, description, category, type })
     .eq("id", id);
@@ -308,7 +313,7 @@ async function deleteTransaction(id) {
     return;
   }
 
-  const { error } = await supabase.from("transactions").delete().eq("id", id);
+  const { error } = await supabaseClient.from("transactions").delete().eq("id", id);
 
   if (error) {
     showNotification("Error deleting transaction: " + error.message, "error");
@@ -406,7 +411,8 @@ function updateExpenseChart(transactions) {
 
 // Logout
 async function logout() {
-  const { error } = await supabase.auth.signOut();
+  console.log("Logout function called directly");
+  const { error } = await supabaseClient.auth.signOut();
   if (error) {
     return showNotification("Logout failed: " + error.message, "error");
   }
@@ -421,9 +427,8 @@ function showNotification(message, type = "success") {
   const notification = document.createElement("div");
   notification.className = `notification alert-${type}`;
   notification.innerHTML = `
-                <i class="fas fa-${
-                  type === "success" ? "check-circle" : "exclamation-circle"
-                }"></i>
+                <i class="fas fa-${type === "success" ? "check-circle" : "exclamation-circle"
+    }"></i>
                 <span>${message}</span>
             `;
 
@@ -475,7 +480,7 @@ async function loadSettings() {
   const {
     data: { user },
     error: userErr,
-  } = await supabase.auth.getUser();
+  } = await supabaseClient.auth.getUser();
   if (userErr) {
     console.error("Error fetching user:", userErr);
     return;
@@ -485,7 +490,7 @@ async function loadSettings() {
   document.getElementById("currentEmail").value = user.email;
 
   // fetch username from your profiles table
-  const { data: profile, error: profErr } = await supabase
+  const { data: profile, error: profErr } = await supabaseClient
     .from("profiles")
     .select("username")
     .eq("id", user.id)
@@ -510,12 +515,12 @@ async function updateUsername() {
   const {
     data: { user },
     error: userErr,
-  } = await supabase.auth.getUser();
+  } = await supabaseClient.auth.getUser();
   if (userErr) return alert("Error fetching user: " + userErr.message);
   const userId = user.id;
 
   // 1️⃣ Check if username is already taken by someone else
-  const { count, error: countErr } = await supabase
+  const { count, error: countErr } = await supabaseClient
     .from("profiles")
     .select("id", { count: "exact", head: true })
     .eq("username", newU)
@@ -528,7 +533,7 @@ async function updateUsername() {
   }
 
   // 2️⃣ Proceed with update
-  const { error: updErr } = await supabase
+  const { error: updErr } = await supabaseClient
     .from("profiles")
     .update({ username: newU })
     .eq("id", userId);
@@ -545,7 +550,7 @@ async function updateEmail() {
   const newE = document.getElementById("newEmail").value.trim();
   if (!newE) return alert("Please enter a new email.");
 
-  const { error } = await supabase.auth.updateUser({ email: newE });
+  const { error } = await supabaseClient.auth.updateUser({ email: newE });
   if (error) return alert("Email update failed: " + error.message);
 
   document.getElementById("currentEmail").value = newE;
@@ -567,7 +572,7 @@ async function updatePassword() {
 
   // 2. Re-authenticate with the old password
   const { data: signInData, error: signInErr } =
-    await supabase.auth.signInWithPassword({
+    await supabaseClient.auth.signInWithPassword({
       email,
       password: currentPwd,
     });
@@ -576,7 +581,7 @@ async function updatePassword() {
   }
 
   // 3. Now safe to update
-  const { error: updateErr } = await supabase.auth.updateUser({
+  const { error: updateErr } = await supabaseClient.auth.updateUser({
     password: newPwd,
   });
   if (updateErr) {
@@ -603,7 +608,7 @@ async function deleteAccount() {
     const {
       data: { user },
       error: userErr,
-    } = await supabase.auth.getUser();
+    } = await supabaseClient.auth.getUser();
     if (userErr) throw userErr;
     const userId = user.id;
 
@@ -617,7 +622,7 @@ async function deleteAccount() {
     if (fnError) throw new Error(fnError);
 
     // ▶️ Clean up the profiles table
-    const { error: delProfErr } = await supabase
+    const { error: delProfErr } = await supabaseClient
       .from("profiles")
       .delete()
       .eq("id", userId);
@@ -625,7 +630,7 @@ async function deleteAccount() {
       console.warn("Profile deletion failed:", delProfErr.message);
 
     // ▶️ Sign out & redirect
-    await supabase.auth.signOut();
+    await supabaseClient.auth.signOut();
     alert("Your account has been deleted.");
     window.location.href = "/login.html";
   } catch (err) {

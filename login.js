@@ -3,10 +3,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const loginIdInput = document.getElementById("loginId");
   const passwordInput = document.getElementById("password");
 
-  const supabase = window.supabase.createClient(
-    "https://teafrrntffzraoiuurie.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRlYWZycm50ZmZ6cmFvaXV1cmllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM1OTMwMzgsImV4cCI6MjA2OTE2OTAzOH0.EZ7Lkxo_H1lZMMMH9OmjqKm3ALcIRripTzYrz7FosZs"
-  );
+  // Supabase is initialized in config.js
+  // const supabase = window.supabase.createClient(...)
 
   loginForm.addEventListener("submit", async function (e) {
     e.preventDefault();
@@ -21,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     if (!isEmail) {
       // Lookup email from profiles table using username
-      const { data: profile, error } = await supabase
+      const { data: profile, error } = await supabaseClient
         .from("profiles")
         .select("email")
         .eq("username", loginId)
@@ -36,7 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     // Now login using email + password
-    const { data, error } = await supabase.auth.signInWithPassword({
+    const { data, error } = await supabaseClient.auth.signInWithPassword({
       email: emailToLogin,
       password,
     });

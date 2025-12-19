@@ -8,10 +8,8 @@ document.addEventListener("DOMContentLoaded", function () {
   const emailInput = document.getElementById("email");
 
   // Supabase initialization
-  const supabase = window.supabase.createClient(
-    "https://teafrrntffzraoiuurie.supabase.co",
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InRlYWZycm50ZmZ6cmFvaXV1cmllIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTM1OTMwMzgsImV4cCI6MjA2OTE2OTAzOH0.EZ7Lkxo_H1lZMMMH9OmjqKm3ALcIRripTzYrz7FosZs"
-  );
+  // Supabase is initialized in config.js
+  // const supabase = window.supabase.createClient(...)
 
   // Password validation rules
   const rules = {
@@ -101,7 +99,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       // 1️⃣ Check if username already exists in 'profiles' table
-      const { data: userWithUsername } = await supabase
+      const { data: userWithUsername } = await supabaseClient
         .from("profiles")
         .select("id")
         .eq("username", username)
@@ -116,7 +114,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // 2️⃣ Check if email is already registered in auth.users
       const { data: emailCheck, error: emailError } =
-        await supabase.auth.signInWithPassword({
+        await supabaseClient.auth.signInWithPassword({
           email,
           password: "dummy", // invalid password just to test existence
         });
@@ -127,7 +125,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       // 3️⃣ Register user with auth
-      const { data, error } = await supabase.auth.signUp({
+      const { data, error } = await supabaseClient.auth.signUp({
         email,
         password,
       });
@@ -144,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
       }
 
       // 4️⃣ Insert user into 'profiles' table
-      const { error: profileError } = await supabase.from("profiles").insert([
+      const { error: profileError } = await supabaseClient.from("profiles").insert([
         {
           id: user.id,
           username: username,
