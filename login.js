@@ -43,7 +43,7 @@ document.addEventListener("DOMContentLoaded", function () {
       alert("Login failed: Invalid email or password.");
     } else {
       alert("Login successful!");
-      window.location.href = "index.html"; // or your dashboard/home page
+      window.location.href = "dashboard.html"; // or your dashboard/home page
     }
   });
 });
