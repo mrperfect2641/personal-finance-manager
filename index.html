@@ -9,121 +9,223 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
-            --primary-color: #2C3E50;
-            --accent-color: #1ABC9C;
-            --text-light: #ecf0f1;
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --light-bg: #f8f9fa;
+            --text-color: #2c3e50;
         }
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #1a2a6c, #b21f1f, #fdbb2d);
-            /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
-            background-attachment: fixed;
-            color: var(--text-light);
+            color: var(--text-color);
+            background-color: white;
         }
 
-        .glass-nav {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        /* Navbar */
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            padding: 15px 0;
         }
 
+        .navbar-brand {
+            color: var(--primary-color) !important;
+            font-weight: 700;
+            font-size: 1.5rem;
+        }
+
+        .nav-link {
+            color: var(--text-color) !important;
+            font-weight: 500;
+        }
+
+        .btn-outline-primary {
+            color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .btn-outline-primary:hover {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+
+        .btn-primary {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+        /* Hero Section */
         .hero-section {
             padding: 100px 0;
+            background-color: var(--light-bg);
             text-align: center;
         }
 
         .hero-title {
             font-size: 3.5rem;
-            font-weight: 700;
-            margin-bottom: 1.5rem;
-            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
-            animation: fadeInDown 1s ease-out;
-        }
-
-        .hero-subtitle {
-            font-size: 1.5rem;
-            margin-bottom: 2.5rem;
-            color: rgba(255, 255, 255, 0.9);
-            animation: fadeInUp 1s ease-out 0.5s both;
-        }
-
-        .btn-cta {
-            padding: 15px 40px;
-            font-size: 1.2rem;
-            border-radius: 50px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            transition: transform 0.3s, box-shadow 0.3s;
-            background-color: var(--accent-color);
-            border: none;
-            color: white;
-            animation: fadeInUp 1s ease-out 1s both;
-        }
-
-        .btn-cta:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
-            background-color: #16a085;
-            color: white;
-        }
-
-        .features-section {
-            padding: 80px 0;
-            background: rgba(0, 0, 0, 0.2);
-        }
-
-        .feature-card {
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(5px);
-            padding: 30px;
-            border-radius: 20px;
-            text-align: center;
-            transition: transform 0.3s;
-            height: 100%;
-            border: 1px solid rgba(255, 255, 255, 0.1);
-        }
-
-        .feature-card:hover {
-            transform: translateY(-10px);
-            background: rgba(255, 255, 255, 0.2);
-        }
-
-        .feature-icon {
-            font-size: 3rem;
-            color: var(--accent-color);
+            font-weight: 800;
+            color: var(--primary-color);
             margin-bottom: 20px;
         }
 
-        .footer {
-            background: rgba(0, 0, 0, 0.3);
-            padding: 40px 0;
+        .hero-subtitle {
+            font-size: 1.25rem;
+            color: #7f8c8d;
+            margin-bottom: 40px;
+            max-width: 700px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-lg {
+            padding: 12px 36px;
+            font-size: 1.1rem;
+            border-radius: 50px;
+        }
+
+        /* Features Section */
+        .features-section {
+            padding: 80px 0;
+        }
+
+        .feature-card {
             text-align: center;
-            margin-top: auto;
+            padding: 40px 20px;
+            transition: transform 0.3s;
         }
 
-        @keyframes fadeInDown {
-            from {
-                opacity: 0;
-                transform: translateY(-30px);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .feature-card:hover {
+            transform: translateY(-5px);
         }
 
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(30px);
-            }
+        .feature-icon-wrapper {
+            width: 80px;
+            height: 80px;
+            background-color: rgba(52, 152, 219, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+        }
 
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+        .feature-icon {
+            font-size: 2rem;
+            color: var(--secondary-color);
+        }
+
+        .feature-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 15px;
+        }
+
+        .feature-text {
+            color: #7f8c8d;
+        }
+
+        /* How It Works */
+        .how-it-works-section {
+            padding: 80px 0;
+            background-color: var(--light-bg);
+        }
+
+        .step-number {
+            font-size: 4rem;
+            font-weight: 900;
+            color: rgba(52, 152, 219, 0.1);
+            line-height: 1;
+            margin-bottom: -20px;
+            position: relative;
+            z-index: 0;
+        }
+
+        .step-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Testimonials */
+        .testimonials-section {
+            padding: 80px 0;
+        }
+
+        .testimonial-card {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.05);
+            text-align: center;
+        }
+
+        .testimonial-text {
+            font-style: italic;
+            color: #555;
+            margin-bottom: 20px;
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+
+        /* FAQ */
+        .faq-section {
+            padding: 80px 0;
+            background-color: var(--light-bg);
+        }
+
+        .accordion-button:not(.collapsed) {
+            background-color: rgba(52, 152, 219, 0.1);
+            color: var(--primary-color);
+        }
+
+        .accordion-button:focus {
+            box-shadow: none;
+            border-color: rgba(0, 0, 0, 0.125);
+        }
+
+        /* Call to Action */
+        .cta-section {
+            padding: 80px 0;
+            background-color: var(--primary-color);
+            color: white;
+            text-align: center;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #1a252f;
+            color: #bdc3c7;
+            padding: 50px 0;
+        }
+
+        .footer h5 {
+            color: white;
+            margin-bottom: 20px;
+        }
+
+        .footer ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer ul li {
+            margin-bottom: 10px;
+        }
+
+        .footer a {
+            color: #bdc3c7;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer a:hover {
+            color: white;
         }
     </style>
 </head>
@@ -131,19 +233,19 @@
 <body>
 
     <!-- Navbar -->
-    <nav class="navbar navbar-expand-lg navbar-dark glass-nav fixed-top">
+    <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
-            <a class="navbar-brand fw-bold" href="#"><i class="fas fa-wallet text-warning me-2"></i>Finance Manager</a>
+            <a class="navbar-brand" href="#"><i class="fas fa-wallet text-warning me-2"></i>Finance Manager</a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
                 <ul class="navbar-nav align-items-center">
                     <li class="nav-item me-3">
-                        <a class="nav-link text-white" href="login.html">Login</a>
+                        <a class="nav-link" href="login.html">Login</a>
                     </li>
                     <li class="nav-item">
-                        <a class="btn btn-outline-light rounded-pill px-4" href="signup.html">Sign Up</a>
+                        <a class="btn btn-primary rounded-pill px-4" href="signup.html">Sign Up</a>
                     </li>
                 </ul>
             </div>
@@ -151,61 +253,204 @@
     </nav>
 
     <!-- Hero Section -->
-    <section class="hero-section d-flex align-items-center min-vh-100">
+    <section class="hero-section">
         <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-lg-10">
-                    <h1 class="hero-title">Master Your Money,<br>Master Your Life</h1>
-                    <p class="hero-subtitle">Track expenses, visualize your spending, and achieve your financial freedom
-                        with our intelligent personal finance manager.</p>
-                    <a href="signup.html" class="btn btn-cta">Get Started Free</a>
-                    <div class="mt-4">
-                        <p class="small text-white-50">Already have an account? <a href="login.html"
-                                class="text-white text-decoration-underline">Login here</a></p>
+            <h1 class="hero-title">Take Control of Your Finances</h1>
+            <p class="hero-subtitle">Simple, intuitive, and powerful expense tracking. Visualize your spending patterns
+                and reach your financial goals faster.</p>
+            <div class="d-flex justify-content-center gap-3">
+                <a href="signup.html" class="btn btn-primary btn-lg">Get Started Free</a>
+                <a href="#features" class="btn btn-outline-primary btn-lg">Learn More</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="container">
+            <h2 class="text-center mb-5 fw-bold">Why Choose Us?</h2>
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <i class="fas fa-chart-pie feature-icon"></i>
+                        </div>
+                        <h3 class="feature-title">Visual Insights</h3>
+                        <p class="feature-text">Understand where your money goes with beautiful, interactive charts and
+                            comprehensive reports.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <i class="fas fa-lock feature-icon"></i>
+                        </div>
+                        <h3 class="feature-title">Bank-Grade Security</h3>
+                        <p class="feature-text">Your data is encrypted and protected. We prioritize your privacy and
+                            security above everything else.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <div class="feature-icon-wrapper">
+                            <i class="fas fa-mobile-alt feature-icon"></i>
+                        </div>
+                        <h3 class="feature-title">Access Anywhere</h3>
+                        <p class="feature-text">Track expenses on the go. Seamlessly syncs across all your devices -
+                            desktop, tablet, and mobile.</p>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Features Section -->
-    <section class="features-section">
+    <!-- How It Works Section -->
+    <section class="how-it-works-section">
         <div class="container">
-            <h2 class="text-center mb-5 fw-bold display-5">Why Choose Us?</h2>
-            <div class="row g-4">
+            <h2 class="text-center mb-5 fw-bold">How It Works</h2>
+            <div class="row g-4 text-center">
                 <div class="col-md-4">
-                    <div class="feature-card">
-                        <i class="fas fa-chart-pie feature-icon"></i>
-                        <h3>Visual Insights</h3>
-                        <p>Understand your spending habits instantly with beautiful, interactive charts and graphs.</p>
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h4>Sign Up</h4>
+                        <p class="text-secondary">Create your free account in seconds. No credit card required.</p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="feature-card">
-                        <i class="fas fa-shield-alt feature-icon"></i>
-                        <h3>Secure & Private</h3>
-                        <p>Your financial data is encrypted and secure. We prioritize your privacy above all else.</p>
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h4>Add Transactions</h4>
+                        <p class="text-secondary">Log your income and expenses easily through our intuitive interface.
+                        </p>
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <div class="feature-card">
-                        <i class="fas fa-mobile-alt feature-icon"></i>
-                        <h3>Access Anywhere</h3>
-                        <p>Manage your finances on the go. Seamlessly works on desktop, tablet, and mobile devices.</p>
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h4>Analyze & Save</h4>
+                        <p class="text-secondary">View detailed reports to identify spending habits and start saving.
+                        </p>
                     </div>
                 </div>
             </div>
+        </div>
+    </section>
+
+    <!-- Testimonials Section -->
+    <section class="testimonials-section">
+        <div class="container">
+            <h2 class="text-center mb-5 fw-bold">What Users Say</h2>
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"This app completely changed how I manage my budget. The charts make
+                            it so easy to see where I'm overspending."</p>
+                        <p class="testimonial-author">- Sarah J.</p>
+                    </div>
+                </div>
+                <div class="col-md-6">
+                    <div class="testimonial-card">
+                        <p class="testimonial-text">"Simple, clean, and effective. Exactly what I was looking for to
+                            track my daily expenses without the clutter."</p>
+                        <p class="testimonial-author">- Michael T.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FAQ Section -->
+    <section class="faq-section">
+        <div class="container">
+            <h2 class="text-center mb-5 fw-bold">Frequency Asked Questions</h2>
+            <div class="row justify-content-center">
+                <div class="col-lg-8">
+                    <div class="accordion" id="faqAccordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq1">
+                                    Is Finance Manager free to use?
+                                </button>
+                            </h2>
+                            <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Yes! The core features of Finance Manager are completely free to use ensuring you
+                                    can get control of your money without spending any.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq2">
+                                    Is my data secure?
+                                </button>
+                            </h2>
+                            <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Absolutely. We use industry-standard encryption to protect your data. We never sell
+                                    your personal information to third parties.
+                                </div>
+                            </div>
+                        </div>
+                        <div class="accordion-item">
+                            <h2 class="accordion-header">
+                                <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                    data-bs-target="#faq3">
+                                    Can I export my data?
+                                </button>
+                            </h2>
+                            <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                                <div class="accordion-body">
+                                    Currently, you can view all your data on the dashboard. We are working on a CSV
+                                    export feature which will be available soon!
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Call to Action -->
+    <section class="cta-section">
+        <div class="container">
+            <h2 class="mb-4">Ready to Start Saving?</h2>
+            <p class="lead mb-4">Join thousands of users who are mastering their personal finances today.</p>
+            <a href="signup.html" class="btn btn-light btn-lg text-primary fw-bold">Create Free Account</a>
         </div>
     </section>
 
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
-            <p class="mb-0">&copy; 2024 Finance Manager. All rights reserved.</p>
-            <div class="mt-3">
-                <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
-                <a href="#" class="text-white me-3"><i class="fab fa-facebook"></i></a>
-                <a href="#" class="text-white"><i class="fab fa-instagram"></i></a>
+            <div class="row">
+                <div class="col-md-4 mb-4">
+                    <h5>Finance Manager</h5>
+                    <p class="small text-muted">Empowering you to make smarter financial decisions every day.</p>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Quick Links</h5>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="#features">Features</a></li>
+                        <li><a href="login.html">Login</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-4 mb-4">
+                    <h5>Connect</h5>
+                    <div class="d-flex gap-3">
+                        <a href="#"><i class="fab fa-twitter fa-lg"></i></a>
+                        <a href="#"><i class="fab fa-facebook fa-lg"></i></a>
+                        <a href="#"><i class="fab fa-instagram fa-lg"></i></a>
+                    </div>
+                </div>
+            </div>
+            <hr class="border-secondary mt-4">
+            <div class="text-center small text-muted">
+                &copy; 2024 Finance Manager. All rights reserved.
             </div>
         </div>
     </footer>
